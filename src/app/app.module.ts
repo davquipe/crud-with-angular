@@ -20,7 +20,8 @@ import { HeroeComponent } from './components/heroes/heroe.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    APP_ROUTING
   ],
   providers: [],
   bootstrap: [AppComponent]
