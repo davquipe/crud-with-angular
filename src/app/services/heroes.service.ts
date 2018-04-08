@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Heroe } from '../interfaces/heroe.interface';
+import { Http, Headers } from "@angular/http";
+import { Heroe } from "../interfaces/heroe.interface";
 import 'rxjs/Rx';
 
 @Injectable()
 export class HeroesService {
 
-  heroesURL:string = "https://heroesapp-4e793.firebaseio.com/heroes.json"
-  heroeURL:string = "https://heroesapp-4e793.firebaseio.com/heroes/"
+  heroesURL:string = "https://heroesapp-59949.firebaseio.com/heroes.json";
+  heroeURL:string = "https://heroesapp-59949.firebaseio.com/heroes/";
 
   constructor( private http:Http ) { }
 
@@ -18,7 +18,7 @@ export class HeroesService {
       'Content-Type':'application/json'
     });
 
-    return this.http.post( this.heroesURL, body, { headers } )
+    return this.http.post(  this.heroesURL, body, { headers }  )
           .map( res=>{
             console.log(res.json());
             return res.json();
@@ -34,7 +34,7 @@ export class HeroesService {
 
     let url = `${ this.heroeURL }/${ key$ }.json`;
 
-    return this.http.put( url , body, { headers } )
+    return this.http.put(  url , body, { headers }  )
           .map( res=>{
             console.log(res.json());
             return res.json();
@@ -48,5 +48,21 @@ export class HeroesService {
       .map( res=>res.json() );
 
   }
+
+  getHeroes( ){
+
+    return this.http.get( this.heroesURL )
+      .map( res=>res.json() );
+
+  }
+
+  borrarHeroe( key$:string){
+
+    let url = `${  this.heroeURL  }/${ key$ }.json`;
+    return this.http.delete( url )
+        .map( res => res.json() )
+
+  }
+
 
 }

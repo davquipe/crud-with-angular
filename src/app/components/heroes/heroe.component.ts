@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Heroe } from '../../interfaces/heroe.interface';
-import { HeroesService } from '../../services/heroes.service';
+import { NgForm } from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Heroe } from "../../interfaces/heroe.interface";
+import { HeroesService } from "../../services/heroes.service";
 
 
 @Component({
@@ -32,7 +32,7 @@ export class HeroeComponent implements OnInit {
           if( this.id !== "nuevo" ){
 
             this._heroesService.getHeroe( this.id )
-              .subscribe( heroe => this.heroe)
+                  .subscribe( heroe => this.heroe = heroe )
 
           }
 
@@ -47,22 +47,30 @@ export class HeroeComponent implements OnInit {
     console.log(this.heroe);
 
     if( this.id == "nuevo" ){
-      //insertado
+      // insertando
       this._heroesService.nuevoHeroe( this.heroe )
             .subscribe( data=>{
-                this.router.navigate(['/heroe',data.name])
+                  this.router.navigate(['/heroe',data.name])
             },
             error=> console.error(error));
     }else{
-      //actualizado
-      this._heroesService.actualizarHeroe( this.heroe, this.id)
+      //actualizando
+      this._heroesService.actualizarHeroe( this.heroe, this.id )
             .subscribe( data=>{
-                console.log(data);
+                  console.log(data);
             },
             error=> console.error(error));
     }
 
+  }
 
+  agregarNuevo( forma:NgForm ){
+
+    this.router.navigate(['/heroe','nuevo']);
+
+    forma.reset({
+      casa:"Marvel"
+    });
 
   }
 
