@@ -6,8 +6,8 @@ import 'rxjs/Rx';
 @Injectable()
 export class HeroesService {
 
-  heroesUrl:string = "https://heroesapp-4e793.firebaseio.com/heroes.json"
-  heroeUrl:string = "https://heroesapp-4e793.firebaseio.com/heroes/"
+  heroesURL:string = "https://heroesapp-4e793.firebaseio.com/heroes.json"
+  heroeURL:string = "https://heroesapp-4e793.firebaseio.com/heroes/"
 
   constructor( private http:Http ) { }
 
@@ -15,10 +15,10 @@ export class HeroesService {
 
     let body = JSON.stringify( heroe );
     let headers = new Headers({
-      'Content-Type':'aplication/json'
+      'Content-Type':'application/json'
     });
 
-    return this.http.post( this.heroesUrl, body, { headers } )
+    return this.http.post( this.heroesURL, body, { headers } )
           .map( res=>{
             console.log(res.json());
             return res.json();
@@ -29,16 +29,24 @@ export class HeroesService {
 
     let body = JSON.stringify( heroe );
     let headers = new Headers({
-      'Content-Type':'aplication/json'
+      'Content-Type':'application/json'
     });
 
-    let url = `${ this.heroeUrl }/${ key$ }.json`;
+    let url = `${ this.heroeURL }/${ key$ }.json`;
 
     return this.http.put( url , body, { headers } )
           .map( res=>{
             console.log(res.json());
             return res.json();
           })
+  }
+
+  getHeroe( key$:string ){
+
+    let url = `${ this.heroeURL }/${ key$ }.json`;
+    return this.http.get( url )
+      .map( res=>res.json() );
+
   }
 
 }

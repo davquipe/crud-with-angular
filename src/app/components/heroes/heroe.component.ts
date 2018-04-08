@@ -12,22 +12,31 @@ import { HeroesService } from '../../services/heroes.service';
 })
 export class HeroeComponent implements OnInit {
 
-
-  heroe:Heroe = {
+  private heroe:Heroe = {
     nombre:"",
     bio:"",
     casa:"Marvel"
-  };
+  }
 
   nuevo:boolean = false;
   id:string;
 
   constructor(private _heroesService: HeroesService,
               private router:Router,
-              private route:ActivatedRoute ) {
+              private route:ActivatedRoute ){
 
     this.route.params
-        .subscribe( parametros=>this.id = parametros['id']);
+        .subscribe( parametros=>{
+
+          this.id = parametros['id']
+          if( this.id !== "nuevo" ){
+
+            this._heroesService.getHeroe( this.id )
+              .subscribe( heroe => this.heroe)
+
+          }
+
+        });
 
   }
 
